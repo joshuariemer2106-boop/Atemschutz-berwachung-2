@@ -95,7 +95,7 @@
             <div style="font-size:14px;opacity:0.95">BF MÜNCHEN</div>
             <div class="title">ATEMSCHUTZÜBERWACHUNG</div>
           </div>
-          <div class="sub">{{ user_name }} ({{ user_role }})</div>
+          <div class="sub">{{ user_name }}{% if user_role %} ({{ user_role }}){% endif %}</div>
           <div style="display:flex;gap:8px;align-items:center">
             <span class="btn btn-light btn-sm disabled">Reiner Atemschutz</span>
           </div>
