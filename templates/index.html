@@ -281,7 +281,8 @@
                   });
                   setTimeout(() => { createTrupp(); }, 100);
                 } else {
-                  alertContainer.innerHTML = '<div class="alert alert-danger">Fehler beim Senden.</div>';
+                  const errText = await response.text();
+                  alertContainer.innerHTML = '<div class="alert alert-danger">Fehler beim Senden: ' + (errText || 'Unbekannter Fehler') + '</div>';
                 }
               });
             } catch (err) {
