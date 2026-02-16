@@ -6,8 +6,17 @@ from werkzeug.utils import secure_filename
 
 load_dotenv()
 
-WEBHOOK_URL_1 = (os.getenv("DISCORD_WEBHOOK_URL") or "").strip()
-WEBHOOK_URL_2 = (os.getenv("DISCORD_WEBHOOK_URL_2") or "").strip()
+
+def normalize_webhook_url(raw):
+    value = (raw or "").strip()
+    if value.startswith("https:https://"):
+        value = "https://" + value[len("https:https://") :]
+    elif value.startswith("http:http://"):
+        value = "http://" + value[len("http:http://") :]
+    return value
+
+
+WEBHOOK_URL = normalize_webhook_url(os.getenv("DISCORD_WEBHOOK_URL"))
 
 BASE_DIR = os.path.dirname(__file__)
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
@@ -18,7 +27,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 def get_webhook_urls():
-    return [url for url in [WEBHOOK_URL_1, WEBHOOK_URL_2] if url]
+    return [WEBHOOK_URL] if WEBHOOK_URL else []
 
 
 @app.route("/", methods=["GET"])
